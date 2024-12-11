@@ -1,0 +1,38 @@
+{
+  "name": "akmj",
+  "version": "0.0.0",
+  "description": "API Kit for Modern JavaScript - A sleek, type-safe HTTP client for modern JavaScript.",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "release": "release-it"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bitrixle/akmj.git"
+  },
+  "keywords": [
+    "http",
+    "client",
+    "type-safe",
+    "typescript",
+    "api",
+    "ky",
+    "fetch",
+    "node-fetch"
+  ],
+  "author": "Bitrixle <bitrixle@gmail.com> (https://bitrixle.dev)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bitrixle/akmj/issues"
+  },
+  "homepage": "https://github.com/bitrixle/akmj#readme",
+  "devDependencies": {
+    "release-it": "^17.10.0",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "ky": "^1.7.2"
+  }
+}
