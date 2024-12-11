@@ -1,16 +1,10 @@
-import { MakeRuangNakesRequest, MakeRuangNakesResponse } from "./utils.js";
+import { MakeAkmjRequest, MakeAkmjResponse } from "./utils.js";
 
-export interface ApiDefinition {
+export interface AkmjDefinition {
   [key: string]: ApiDefinitionParent;
 }
 
-export type LowercaseHttpMethod =
-  | "get"
-  | "post"
-  | "put"
-  | "patch"
-  | "head"
-  | "delete";
+type LowercaseHttpMethod = "get" | "post" | "put" | "patch" | "head" | "delete";
 export type HttpMethod = Uppercase<LowercaseHttpMethod> | LowercaseHttpMethod;
 
 export type ApiDefinitionParent = {
@@ -35,6 +29,6 @@ export type MakeApiDefinition<
   Res extends object | boolean | string,
   HasSchema extends boolean = false
 > = {
-  request: MakeRuangNakesRequest<Req>;
-  response: MakeRuangNakesResponse<Res, HasSchema>;
+  request: MakeAkmjRequest<Req>;
+  response: MakeAkmjResponse<Res, HasSchema>;
 };

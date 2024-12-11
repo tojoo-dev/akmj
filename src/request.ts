@@ -2,25 +2,25 @@ import type { KyInstance } from "ky";
 
 import { AkmjHTTPError } from "./errors.js";
 import { serialize } from "./serialize.js";
-import type { RuangNakesQueryOptions } from "./types/client.js";
+import type { AkmjQueryOptions } from "./types/client.js";
 import { buildSearchParams, isObject, removeSlash } from "./utils.js";
 
 const isServer = typeof FileList === "undefined";
 const isReactNative =
   typeof navigator !== "undefined" && navigator.product === "ReactNative";
 
-type RuangNakesRequestOptions = {
+type AkmjRequestOptions = {
   body: any;
   method: "get" | "post" | "put" | "delete" | "patch" | "head";
   path: string;
   client: KyInstance;
-  queryOptions?: RuangNakesQueryOptions;
+  queryOptions?: AkmjQueryOptions;
 };
 
-export class RuangNakesRequest {
-  #options: RuangNakesRequestOptions;
+export class AkmjRequest {
+  #options: AkmjRequestOptions;
 
-  constructor(options: RuangNakesRequestOptions) {
+  constructor(options: AkmjRequestOptions) {
     this.#options = options;
   }
 

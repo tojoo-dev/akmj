@@ -2,9 +2,9 @@ import { KyInstance } from "ky";
 import { pathGetter } from "./utils.js";
 
 import ky from "ky";
-import { RuangNakesRequest } from "./request.js";
-import { ClientOptions, RuangNakesClient } from "./types/client.js";
-import { ApiDefinition } from "./types/definition.js";
+import { AkmjRequest } from "./request.js";
+import { AkmjClient, ClientOptions } from "./types/client.js";
+import { AkmjDefinition } from "./types/definition.js";
 
 const methods = ["get", "post", "put", "delete", "patch", "head"] as const;
 const prefixedMethods = methods.map((method) => `$${method}`);
@@ -70,7 +70,7 @@ const createProxy = (options: {
         ) as (typeof methods)[number];
 
         const isGetOrHead = ["get", "head"].includes(method);
-        return new RuangNakesRequest({
+        return new AkmjRequest({
           body: paramsOrBody,
           client,
           method,
@@ -114,7 +114,7 @@ const createProxy = (options: {
         body = {};
       }
 
-      return new RuangNakesRequest({
+      return new AkmjRequest({
         body,
         client,
         method: currentRoutePath.method,
@@ -125,9 +125,9 @@ const createProxy = (options: {
   });
 };
 
-export const createClient = <const Api extends ApiDefinition>(
+export const createClient = <const Api extends AkmjDefinition>(
   options: ClientOptions<Api>
-): RuangNakesClient<Api> => {
+): AkmjClient<Api> => {
   const { api: _, ...restOpt } = options;
   const baseUrl = options.baseUrl;
   const client = ky.create({

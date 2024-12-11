@@ -1,27 +1,30 @@
 import type { Options as KyOptions } from "ky";
 import type {
-  ApiDefinition,
+  AkmjDefinition,
   ApiDefinitionParent,
   ApiDefitionUnit,
 } from "./definition.js";
 import type { MaybeArray } from "./utils.js";
 
+type ExtendedHooks = {
+  beforeWrap?: () => void;
+} & KyOptions["hooks"];
+
 /**
  * Options accepted by AKMJ
  */
-export type ClientOptions<T extends ApiDefinition> = {
+export type ClientOptions<T extends AkmjDefinition> = {
   baseUrl: string;
   api?: T;
-} & RuangNakesQueryOptions;
+  hooks?: ExtendedHooks;
+} & AkmjQueryOptions;
 
-export type RuangNakesOptions<T extends ApiDefinition> = Omit<
+export type AkmjOptions<T extends AkmjDefinition> = Omit<
   ClientOptions<T>,
   "api" | "baseUrl"
-> & {
-  baseUrl?: string;
-};
+>;
 
-export type RuangNakesQueryOptions = Omit<
+export type AkmjQueryOptions = Omit<
   KyOptions,
   "prefixUrl" | "body" | "json" | "method" | "searchParams"
 > & { query?: QueryParameters };
@@ -68,7 +71,7 @@ type RestArgs<T extends ApiDefitionUnit> = T["method"] extends
                 : {}
             >
           ]),
-      options?: RuangNakesQueryOptions
+      options?: AkmjQueryOptions
     ]
   : [
       body: T["types"] extends { request: never }
@@ -78,12 +81,12 @@ type RestArgs<T extends ApiDefitionUnit> = T["method"] extends
               ? ConvertToPrimitive<Req>
               : {}
           >,
-      options?: RuangNakesQueryOptions
+      options?: AkmjQueryOptions
     ];
 
-export type RuangNakesClient<in out T extends Record<string, any>> = {
+export type AkmjClient<in out T extends Record<string, any>> = {
   [P in keyof T]: T[P] extends ApiDefinitionParent
-    ? RuangNakesClient<T[P]>
+    ? AkmjClient<T[P]>
     : T[P] extends ApiDefitionUnit
     ? (
         ...args: ParamsArgs<T[P]> extends never
@@ -100,7 +103,7 @@ export type RuangNakesClient<in out T extends Record<string, any>> = {
 /**
  * Shape of the response returned by AKMJ
  */
-export type RuangNakesResponse<Res extends Record<number, unknown>> =
+export type AkmjResponse<Res extends Record<number, unknown>> =
   | {
       error: null;
       status: number;
@@ -127,5 +130,5 @@ export type RuangNakesResponse<Res extends Record<number, unknown>> =
 export type ResponseOrUnwrap<Res extends Record<number, unknown>> = Promise<
   Res[200]
 > & {
-  wrap: () => Promise<RuangNakesResponse<Res>>;
+  wrap: () => Promise<AkmjResponse<Res>>;
 };

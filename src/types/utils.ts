@@ -99,7 +99,7 @@ export type ConvertReturnTypeToRecordStatusResponse<T> = {
 /**
  * Shortcut for computing the AKMJ response type
  */
-export type MakeRuangNakesResponse<
+export type MakeAkmjResponse<
   T extends object | boolean | string,
   HasSchema extends boolean = false
 > = Simplify<Serialize<ConvertReturnTypeToRecordStatusResponse<Awaited<T>>>> &
@@ -112,6 +112,6 @@ export type MakeRuangNakesResponse<
  *
  * Also Remap MultipartFile to Blob | File | ReactNativeFile
  */
-export type MakeRuangNakesRequest<T extends object> = MakeOptional<{
+export type MakeAkmjRequest<T extends object> = MakeOptional<{
   [K in keyof T]: T[K] extends FileList ? Blob | File | ReactNativeFile : T[K];
 }>;
