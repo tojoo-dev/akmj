@@ -97,6 +97,13 @@ export class AkmjRequest {
     const status = response.status;
     if (!response.ok) {
       error = new AkmjHTTPError(response.status, data);
+      if (
+        typeof this.#options.queryOptions?.hooks?.transformError === "function"
+      ) {
+        this.#options.queryOptions?.hooks?.transformError(
+          error as AkmjHTTPError
+        );
+      }
       data = undefined;
     }
 

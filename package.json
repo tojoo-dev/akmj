@@ -3,9 +3,14 @@
   "version": "0.0.0",
   "description": "API Kit for Modern JavaScript - A sleek, type-safe HTTP client for modern JavaScript.",
   "type": "module",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rimraf dist && tsc -p tsconfig.dist.json",
     "release": "release-it"
   },
   "repository": {
@@ -30,6 +35,7 @@
   "homepage": "https://github.com/bitrixle/akmj#readme",
   "devDependencies": {
     "release-it": "^17.10.0",
+    "rimraf": "^6.0.1",
     "typescript": "^5.7.2"
   },
   "dependencies": {

@@ -1,4 +1,5 @@
 import type { Options as KyOptions } from "ky";
+import { AkmjHTTPError } from "../errors.js";
 import type {
   AkmjDefinition,
   ApiDefinitionParent,
@@ -7,7 +8,7 @@ import type {
 import type { MaybeArray } from "./utils.js";
 
 type ExtendedHooks = {
-  beforeWrap?: () => void;
+  transformError?: (error: AkmjHTTPError) => void;
 } & KyOptions["hooks"];
 
 /**
@@ -16,7 +17,6 @@ type ExtendedHooks = {
 export type ClientOptions<T extends AkmjDefinition> = {
   baseUrl: string;
   api?: T;
-  hooks?: ExtendedHooks;
 } & AkmjQueryOptions;
 
 export type AkmjOptions<T extends AkmjDefinition> = Omit<
@@ -27,7 +27,7 @@ export type AkmjOptions<T extends AkmjDefinition> = Omit<
 export type AkmjQueryOptions = Omit<
   KyOptions,
   "prefixUrl" | "body" | "json" | "method" | "searchParams"
-> & { query?: QueryParameters };
+> & { query?: QueryParameters; hooks?: ExtendedHooks };
 
 export type QueryParameters = Record<
   string,
