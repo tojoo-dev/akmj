@@ -1,6 +1,6 @@
 {
   "name": "akmj",
-  "version": "0.0.1-0",
+  "version": "0.0.1-1",
   "description": "API Kit for Modern JavaScript - A sleek, type-safe HTTP client for modern JavaScript.",
   "type": "module",
   "main": "dist/index.js",
