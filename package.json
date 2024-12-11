@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bitrixle/akmj.git"
+    "url": "git+https://github.com/tojoo-dev/akmj.git"
   },
   "keywords": [
     "http",
@@ -27,12 +27,12 @@
     "fetch",
     "node-fetch"
   ],
-  "author": "Bitrixle <bitrixle@gmail.com> (https://bitrixle.dev)",
+  "author": "Tojoo.dev <tojoo.dev@gmail.com> (https://ahann.dev)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/bitrixle/akmj/issues"
+    "url": "https://github.com/tojoo-dev/akmj/issues"
   },
-  "homepage": "https://github.com/bitrixle/akmj#readme",
+  "homepage": "https://github.com/tojoo-dev/akmj#readme",
   "devDependencies": {
     "release-it": "^17.10.0",
     "rimraf": "^6.0.1",

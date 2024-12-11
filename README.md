@@ -13,4 +13,4 @@ AKMJ is a lightweight and powerful library designed to streamline API integratio
 - **Extensible Design**: Customize behaviors like error handling, retries, and middleware with ease.
 - **Small Footprint**: Lightweight and optimized for modern JavaScript frameworks and libraries.
 
-AKMJ is the ultimate toolkit for developers building scalable and maintainable JavaScript applications that demand seamless API communication. Whether you're working with traditional RESTful services or building complex applications, AKMJ simplifies your workflow and boosts productivity.
+AKMJ is the ultimate toolkit for developers building scalable and maintainable JavaScript applications that demand seamless API communication. Whether you're working with traditional RESTful services or building complex applications, AKMJ simplifies your workflow and boosts productivity. Inspired by [Tuyau](https://github.com/Julien-R44/tuyau) and powered by [Ky](https://github.com/sindresorhus/ky).
