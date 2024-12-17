@@ -3,7 +3,7 @@ import { AkmjHTTPError } from "../errors.js";
 import type {
   AkmjDefinition,
   ApiDefinitionParent,
-  ApiDefitionUnit,
+  ApiDefinitionUnit,
 } from "./definition.js";
 import type { MaybeArray } from "./utils.js";
 
@@ -38,7 +38,7 @@ export type QueryParameters = Record<
 type OptionalRequest<Req> = Req extends never ? {} : Req;
 
 // Construct `params` argument if required
-type ParamsArgs<T extends ApiDefitionUnit> = T["params"] extends string[]
+type ParamsArgs<T extends ApiDefinitionUnit> = T["params"] extends string[]
   ? T["params"][number] extends never // Check if `params` array is empty
     ? never
     : { [K in T["params"][number]]: string }
@@ -57,7 +57,7 @@ type ConvertToPrimitive<T> = T extends StringConstructor
   : T;
 
 // Construct `queryParams` or `body` arguments based on HTTP method
-type RestArgs<T extends ApiDefitionUnit> = T["method"] extends
+type RestArgs<T extends ApiDefinitionUnit> = Lowercase<T["method"]> extends
   | "get"
   | "head"
   | "delete"
@@ -87,7 +87,7 @@ type RestArgs<T extends ApiDefitionUnit> = T["method"] extends
 export type AkmjClient<in out T extends Record<string, any>> = {
   [P in keyof T]: T[P] extends ApiDefinitionParent
     ? AkmjClient<T[P]>
-    : T[P] extends ApiDefitionUnit
+    : T[P] extends ApiDefinitionUnit
     ? (
         ...args: ParamsArgs<T[P]> extends never
           ? RestArgs<T[P]>

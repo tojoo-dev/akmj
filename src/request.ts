@@ -3,6 +3,7 @@ import type { KyInstance } from "ky";
 import { AkmjHTTPError } from "./errors.js";
 import { serialize } from "./serialize.js";
 import type { AkmjQueryOptions } from "./types/client.js";
+import { HttpMethod } from "./types/definition.js";
 import { buildSearchParams, isObject, removeSlash } from "./utils.js";
 
 const isServer = typeof FileList === "undefined";
@@ -20,8 +21,11 @@ type AkmjRequestOptions = {
 export class AkmjRequest {
   #options: AkmjRequestOptions;
 
-  constructor(options: AkmjRequestOptions) {
-    this.#options = options;
+  constructor({ method, ...options }: AkmjRequestOptions) {
+    this.#options = {
+      ...options,
+      method: method.toLowerCase() as Lowercase<HttpMethod>,
+    };
   }
 
   /**

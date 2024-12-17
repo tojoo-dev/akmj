@@ -9,18 +9,20 @@ export type HttpMethod = Uppercase<LowercaseHttpMethod> | LowercaseHttpMethod;
 
 export type ApiDefinitionParent = {
   // Keys starting with `$` are handled separately
-  [key in `$${string}`]?: ApiDefitionUnit;
+  [key in `$${string}`]?: ApiDefinitionUnit;
 } & {
   // Keys without `$` are treated recursively
   [key in Exclude<string, `$${string}`>]?:
     | ApiDefinitionParent
-    | ApiDefitionUnit;
+    | ApiDefinitionUnit;
 };
 
-export type ApiDefitionUnit = {
+export type ApiDefinitionUnit = {
   path: string;
   method: HttpMethod;
-  types?: { request: any; response: Record<number, unknown> } | unknown;
+  types?:
+    | { request: any; response: Record<number, unknown> }
+    | MakeApiDefinition<never, any>;
   params?: string[];
 };
 

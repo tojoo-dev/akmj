@@ -107,7 +107,12 @@ const createProxy = (options: {
       const isBodyIsOptions =
         body &&
         typeof body === "object" &&
-        Object.keys(body).some((key) => queryOptKey.includes(key));
+        Object.keys(body).every((key, index, array) => {
+          if (queryOptKey.includes(key)) {
+            return array.indexOf(key) === index;
+          }
+          return false;
+        });
 
       if (isBodyIsOptions) {
         qOption = body;
