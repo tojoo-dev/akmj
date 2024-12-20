@@ -100,7 +100,7 @@ export class AkmjRequest {
      */
     const status = response.status;
     if (!response.ok) {
-      error = new AkmjHTTPError(response.status, data);
+      error = new AkmjHTTPError(response);
       if (
         typeof this.#options.queryOptions?.hooks?.transformError === "function"
       ) {
