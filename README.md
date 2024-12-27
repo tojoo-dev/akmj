@@ -1,6 +1,6 @@
 # **AKMJ: API Kit for Modern JavaScript**
 
-**currently only support for typescript!!!**
+**Request and response type safe only support primitive types in ^v.0.1.0-next.0!!!**
 
 AKMJ is a lightweight and powerful library designed to streamline API integration in modern JavaScript applications. With a focus on simplicity, flexibility, and type safety, AKMJ empowers developers to define and interact with RESTful APIs efficiently while maintaining robust code quality.
 
@@ -67,6 +67,63 @@ const data = await client.auth.$login({
 
 console.log(data);
 // { token: "token here"}
+```
+
+#### Type-safe Request and Response
+
+```typescript
+import { akmj, createClient } from "akmj";
+
+const api: AkmjDefinition = {
+  auth: {
+    $login: {
+      method: "post",
+      path: "/login",
+      types: {
+        request: akmj.object({
+          email: akmj.string(),
+          password: akmj.string(),
+          secret: akmj
+            .object({
+              key: akmj.string(),
+            })
+            .optional(),
+        }),
+        response: {
+          200: akmj.object({
+            token: akmj.string(),
+          }),
+        },
+      },
+    },
+  },
+};
+```
+
+Currently, only supported types are primitive types.
+
+##### Array Type
+
+Make an array type from existing type
+
+```typescript
+akmj.string().array();
+```
+
+or from object type
+
+```typescript
+akmj
+  .object({
+    key: akmj.string(),
+  })
+  .array();
+```
+
+##### Nullable Type
+
+```typescript
+akmj.string().nullable();
 ```
 
 Some options you can find in [ky](https://github.com/sindresorhus/ky#options) and [ky hooks](https://github.com/sindresorhus/ky#hooks).

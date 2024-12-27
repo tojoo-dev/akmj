@@ -1,4 +1,5 @@
 import type { Options as KyOptions } from "ky";
+import { AkmjType } from "../definition.js";
 import { AkmjHTTPError } from "../errors.js";
 import type {
   AkmjDefinition,
@@ -44,7 +45,11 @@ type ParamsArgs<T extends ApiDefinitionUnit> = T["params"] extends string[]
     : { [K in T["params"][number]]: string }
   : never;
 
-type ConvertToPrimitive<T> = T extends StringConstructor
+type ConvertToPrimitive<T> = T extends AkmjType<infer U>
+  ? U extends object
+    ? { [K in keyof U]: ConvertToPrimitive<U[K]> }
+    : U
+  : T extends StringConstructor
   ? string
   : T extends NumberConstructor
   ? number
@@ -94,7 +99,7 @@ export type AkmjClient<in out T extends Record<string, any>> = {
           : [params: ParamsArgs<T[P]>, ...rest: RestArgs<T[P]>]
       ) => ResponseOrUnwrap<
         T[P]["types"]["response"] extends Record<number, unknown>
-          ? T[P]["types"]["response"]
+          ? ConvertToPrimitive<T[P]["types"]["response"]>
           : {}
       >
     : never;
