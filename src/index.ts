@@ -2,5 +2,6 @@ export { createClient } from "./client.js";
 export { AkmjDefinition } from "./types/definition.js";
 
 export { AfterResponseHook, BeforeErrorHook, BeforeRequestHook } from "ky";
+export { akmj } from "./definition.js";
 export * from "./errors.js";
 export * from "./types/index.js";

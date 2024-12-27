@@ -21,7 +21,7 @@ export type ApiDefinitionUnit = {
   path: string;
   method: HttpMethod;
   types?:
-    | { request: any; response: Record<number, unknown> }
+    | { request: any; response?: Record<number, unknown> }
     | MakeApiDefinition<never, any>;
   params?: string[];
 };
