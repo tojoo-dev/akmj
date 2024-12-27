@@ -1,6 +1,6 @@
 # **AKMJ: API Kit for Modern JavaScript**
 
-**currently request and response type only support for typescript!!!**
+**Request and response type safe only support primitive types in ^v.0.1.0-next.0!!!**
 
 AKMJ is a lightweight and powerful library designed to streamline API integration in modern JavaScript applications. With a focus on simplicity, flexibility, and type safety, AKMJ empowers developers to define and interact with RESTful APIs efficiently while maintaining robust code quality.
 
