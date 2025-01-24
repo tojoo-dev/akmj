@@ -1,4 +1,6 @@
 # **AKMJ: API Kit for Modern JavaScript**
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftojoo-dev%2Fakmj.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftojoo-dev%2Fakmj?ref=badge_shield)
+
 
 **Request and response type safe only support primitive types in ^v.0.1.0-next.0!!!**
 
@@ -131,3 +133,7 @@ Some options you can find in [ky](https://github.com/sindresorhus/ky#options) an
 ## Contributing
 
 Contributions are welcome! If you find a bug or have a feature request, please open an issue or submit a pull request on the GitHub repository.
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftojoo-dev%2Fakmj.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftojoo-dev%2Fakmj?ref=badge_large)
