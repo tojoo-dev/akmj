@@ -87,7 +87,6 @@ export class AkmjRequest {
     const responseType = response.headers.get("Content-Type")?.split(";")[0];
     if (responseType === "application/json") {
       data = await response.json();
-      data = data?.data ? data?.data : data;
     } else if (responseType === "application/octet-stream") {
       data = await response.arrayBuffer();
     } else {
