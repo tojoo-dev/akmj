@@ -1,2 +1,2 @@
 export { AkmjClient, AkmjOptions } from "./client.js";
-export { AkmjDefinition } from "./definition.js";
+export { AkmjDefinition, MakeApiDefinition } from "./definition.js";
