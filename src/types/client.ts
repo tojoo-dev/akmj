@@ -38,12 +38,15 @@ export type QueryParameters = Record<
 // Make the `request` optional if it's undefined, null, or unknown
 type OptionalRequest<Req> = Req extends never ? {} : Req;
 
+type ExtractParams<Path extends string> =
+  Path extends `${string}:${infer Param}/${infer Rest}`
+    ? { [K in Param | keyof ExtractParams<`/${Rest}`>]: string }
+    : Path extends `${string}:${infer Param}`
+    ? { [K in Param]: string }
+    : never;
+
 // Construct `params` argument if required
-type ParamsArgs<T extends ApiDefinitionUnit> = T["params"] extends string[]
-  ? T["params"][number] extends never // Check if `params` array is empty
-    ? never
-    : { [K in T["params"][number]]: string }
-  : never;
+type ParamsArgs<T extends ApiDefinitionUnit> = ExtractParams<T["path"]>;
 
 type ConvertToPrimitive<T> = T extends AkmjType<infer U>
   ? U extends object
@@ -96,7 +99,7 @@ export type AkmjClient<in out T extends Record<string, any>> = {
     ? (
         ...args: ParamsArgs<T[P]> extends never
           ? RestArgs<T[P]>
-          : [params: ParamsArgs<T[P]>, ...rest: RestArgs<T[P]>]
+          : [pathParams: ParamsArgs<T[P]>, ...rest: RestArgs<T[P]>]
       ) => ResponseOrUnwrap<
         T[P]["types"]["response"] extends Record<number, unknown>
           ? ConvertToPrimitive<T[P]["types"]["response"]>
