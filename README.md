@@ -1,8 +1,8 @@
 # **AKMJ: API Kit for Modern JavaScript**
+
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftojoo-dev%2Fakmj.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftojoo-dev%2Fakmj?ref=badge_shield)
 
-
-**Request and response type safe only support primitive types in ^v.0.1.0-next.0!!!**
+**⚠️ This library is still in experimental stage, API changes will be frequently changing without warning.**
 
 AKMJ is a lightweight and powerful library designed to streamline API integration in modern JavaScript applications. With a focus on simplicity, flexibility, and type safety, AKMJ empowers developers to define and interact with RESTful APIs efficiently while maintaining robust code quality.
 
@@ -12,7 +12,7 @@ AKMJ is a lightweight and powerful library designed to streamline API integratio
 - **Type-Safe Interactions**: Leverage TypeScript support to ensure request and response data align with your API schema.
 - **Dynamic Proxy-based API Calls**: Access endpoints with intuitive syntax, e.g., `client.auth.$login({ email, password })`.
 - **Request Lifecycle Management**: Easily manage headers, query parameters, and hooks for request/response lifecycle events.
-- **Extensible Design**: Customize behaviors like error handling, retries, and middleware with ease.
+- **Extensible Design**: Customize behaviors like error handling, retries, etc with ease.
 - **Small Footprint**: Lightweight and optimized for modern JavaScript frameworks and libraries.
 
 Inspired by [Tuyau](https://github.com/Julien-R44/tuyau) and powered by [Ky](https://github.com/sindresorhus/ky).
@@ -68,41 +68,40 @@ const data = await client.auth.$login({
 });
 
 console.log(data);
-// { token: "token here"}
+// { token: "generated token"}
 ```
 
 #### Type-safe Request and Response
 
 ```typescript
-import { akmj, createClient } from "akmj";
-
 const api: AkmjDefinition = {
-  auth: {
-    $login: {
-      method: "post",
-      path: "/login",
+  users: {
+    $getUser: {
+      method: "get",
+      path: "/users/:id",
       types: {
         request: akmj.object({
-          email: akmj.string(),
-          password: akmj.string(),
-          secret: akmj
-            .object({
-              key: akmj.string(),
-            })
-            .optional(),
+          include: akmj.string().optional(),
         }),
         response: {
           200: akmj.object({
-            token: akmj.string(),
+            id: akmj.string(),
+            name: akmj.string(),
           }),
         },
       },
     },
   },
 };
+
+// Usage
+const user = await client.users.$getUser(
+  { id: "123" }, // Path parameters
+  { include: "profile" } // Query parameters
+);
 ```
 
-Currently, only supported types are primitive types.
+Currently, only primitive types are supported.
 
 ##### Array Type
 
@@ -134,6 +133,6 @@ Some options you can find in [ky](https://github.com/sindresorhus/ky#options) an
 
 Contributions are welcome! If you find a bug or have a feature request, please open an issue or submit a pull request on the GitHub repository.
 
-
 ## License
+
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftojoo-dev%2Fakmj.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftojoo-dev%2Fakmj?ref=badge_large)
