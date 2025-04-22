@@ -23,7 +23,6 @@ export type ApiDefinitionUnit = {
   types?:
     | { request: any; response?: Record<number, unknown> }
     | MakeApiDefinition<never, any>;
-  params?: string[];
 };
 
 export type MakeApiDefinition<
