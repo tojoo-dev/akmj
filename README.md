@@ -2,79 +2,71 @@
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftojoo-dev%2Fakmj.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftojoo-dev%2Fakmj?ref=badge_shield)
 
-**⚠️ This library is still in experimental stage, API changes will be frequently changing without warning.**
+> [!WARNING]
+> This library is still in experimental stage, API changes may occur without warning.
 
-AKMJ is a lightweight and powerful library designed to streamline API integration in modern JavaScript applications. With a focus on simplicity, flexibility, and type safety, AKMJ empowers developers to define and interact with RESTful APIs efficiently while maintaining robust code quality.
+"AKMJ" is a lightweight and powerful library designed to streamline API integration in modern JavaScript applications. With a focus on simplicity, flexibility, and type safety, "AKMJ" empowers developers to define and interact with RESTful APIs efficiently while maintaining robust code quality.
 
-### Key Features:
+### Key Features
 
-- **Declarative API Definitions**: Use a clean, structured format to define your API routes, parameters, and methods.
-- **Type-Safe Interactions**: Leverage TypeScript support to ensure request and response data align with your API schema.
-- **Dynamic Proxy-based API Calls**: Access endpoints with intuitive syntax, e.g., `client.auth.$login({ email, password })`.
-- **Request Lifecycle Management**: Easily manage headers, query parameters, and hooks for request/response lifecycle events.
-- **Extensible Design**: Customize behaviors like error handling, retries, etc with ease.
-- **Small Footprint**: Lightweight and optimized for modern JavaScript frameworks and libraries.
+- **Type-Safe Interactions**: Full TypeScript support with automatic type inference
+- **Declarative API Definitions**: Clean, structured format to define your API routes
+- **Path Parameter Inference**: Automatically extracts and types path parameters
+- **Dynamic Proxy Calls**: Intuitive syntax (e.g., `client.auth.$login({ email, password })`)
+- **Request Lifecycle Hooks**: Built-in support for request/response lifecycle events
+- **Small Footprint**: Lightweight core powered by [Ky](https://github.com/sindresorhus/ky)
 
-Inspired by [Tuyau](https://github.com/Julien-R44/tuyau) and powered by [Ky](https://github.com/sindresorhus/ky).
-
-## Usage
-
-### Install
+## Installation
 
 ```bash
 npm install akmj
 ```
 
-### Quick Start
+## Usage
 
-You can directly input api route in `createClient` or create separate variable for it, you have to define it as satisfies `AkmjDefinition` type.
+### Basic Setup
 
 ```typescript
-import type { AkmjDefinition, MakeApiDefinition } from "akmj";
+import { createClient, type AkmjDefinition } from "akmj";
 
-const api: AkmjDefinition = {
+const api = {
   auth: {
     $login: {
       method: "post",
       path: "/login",
-      types: {} as MakeApiDefinition<
-        {
-          email: string;
-          password: string;
+      types: {
+        request: akmj.object({
+          email: akmj.string(),
+          password: akmj.string(),
+        }),
+        response: {
+          200: akmj.object({
+            token: akmj.string(),
+          }),
         },
-        {
-          token: string;
-        }
-      >,
+      },
     },
   },
-} satisfies AkmjDefinition;
-```
-
-Pass it to `createClient` function and you're ready to go!
-
-```typescript
-import { createClient } from "akmj";
+} as const satisfies AkmjDefinition;
 
 const client = createClient({
   baseUrl: "https://api.example.com",
   api,
-  // other options
 });
 
-const data = await client.auth.$login({
+// Use the client
+const { token } = await client.auth.$login({
   email: "user@example.com",
   password: "password",
 });
-
-console.log(data);
-// { token: "generated token"}
 ```
 
-#### Type-safe Request and Response
+### Path Parameters
+
+Parameters in the URL path are automatically inferred from `:param` syntax:
 
 ```typescript
-const api: AkmjDefinition = {
+const api = {
   users: {
     $getUser: {
       method: "get",
@@ -92,7 +84,7 @@ const api: AkmjDefinition = {
       },
     },
   },
-};
+} as const satisfies AkmjDefinition;
 
 // Usage
 const user = await client.users.$getUser(
@@ -101,37 +93,36 @@ const user = await client.users.$getUser(
 );
 ```
 
-Currently, only primitive types are supported.
+### Type Utilities
 
-##### Array Type
-
-Make an array type from existing type
+AKMJ provides several type utilities to define your API schema:
 
 ```typescript
-akmj.string().array();
+// Array types
+akmj.string().array(); // string[]
+akmj.object({ id: akmj.string() }).array(); // Array<{ id: string }>
+
+// Optional fields
+akmj.string().optional(); // string | undefined
+
+// Nullable fields
+akmj.string().nullable(); // string | null
 ```
 
-or from object type
+## Advanced Configuration
 
-```typescript
-akmj
-  .object({
-    key: akmj.string(),
-  })
-  .array();
-```
+For additional options and hooks, refer to [Ky documentation](https://github.com/sindresorhus/ky#options).
 
-##### Nullable Type
+## Roadmap
 
-```typescript
-akmj.string().nullable();
-```
-
-Some options you can find in [ky](https://github.com/sindresorhus/ky#options) and [ky hooks](https://github.com/sindresorhus/ky#hooks).
+- [x] Automatic path parameter type inference
+- [ ] RPC-style client support (`client.users({ id: 1 }).$get()`)
+- [ ] Enum, union, and intersection types
+- [ ] Comprehensive test suite
 
 ## Contributing
 
-Contributions are welcome! If you find a bug or have a feature request, please open an issue or submit a pull request on the GitHub repository.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
