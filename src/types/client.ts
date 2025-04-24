@@ -45,8 +45,19 @@ type ExtractParams<Path extends string> =
     ? { [K in Param]: string }
     : never;
 
-// Construct `params` argument if required
-type ParamsArgs<T extends ApiDefinitionUnit> = ExtractParams<T["path"]>;
+type ParamsArgsObj<T extends string[] | undefined> = T extends string[]
+  ? T[number] extends never // Check if `params` array is empty
+    ? never
+    : { [K in T[number]]: string }
+  : never;
+
+type ParamsArgs<T extends ApiDefinitionUnit> = [
+  ExtractParams<T["path"]>
+] extends [never]
+  ? ParamsArgsObj<T["params"]>
+  : [ParamsArgsObj<T["params"]>] extends [never]
+  ? ExtractParams<T["path"]>
+  : ExtractParams<T["path"]> & ParamsArgsObj<T["params"]>;
 
 type ConvertToPrimitive<T> = T extends AkmjType<infer U>
   ? U extends object
