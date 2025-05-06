@@ -12,14 +12,21 @@
 - **Type-Safe Interactions**: Full TypeScript support with automatic type inference
 - **Declarative API Definitions**: Clean, structured format to define your API routes
 - **Path Parameter Inference**: Automatically extracts and types path parameters
-- **Dynamic Proxy Calls**: Intuitive syntax (e.g., `client.auth.$login({ email, password })`)
+- **Dynamic Method Calls**: Intuitive syntax (e.g., `client.auth.$login({ email, password })`) based on API definitions
 - **Request Lifecycle Hooks**: Built-in support for request/response lifecycle events
 - **Small Footprint**: Lightweight core powered by [Ky](https://github.com/sindresorhus/ky)
 
 ## Installation
 
 ```bash
+# npm
 npm install akmj
+
+# pnpm
+pnpm add akmj
+
+# yarn
+yarn add akmj
 ```
 
 ## Usage
@@ -116,7 +123,7 @@ For additional options and hooks, refer to [Ky documentation](https://github.com
 ## Roadmap
 
 - [x] Automatic path parameter type inference
-- [ ] RPC-style client support (`client.users({ id: 1 }).$get()`)
+- [ ] RPC-style client support (`GET /users/1` as `client.users({ id: 1 }).$get()`)
 - [ ] Enum, union, and intersection types
 - [ ] Comprehensive test suite
 

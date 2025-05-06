@@ -94,7 +94,7 @@ const createProxy = (options: {
       let path = currentRoutePath.path;
       let body;
       let qOption;
-      if (currentRoutePath.params?.length > 0) {
+      if (currentRoutePath.params?.length > 0 || path.match(/:(\w+)/g)) {
         const params = paramsOrBody as any;
         // @ts-expect-error
         path = path.replace(/:(\w+)/g, (_, key) => params[key]);
